@@ -2,6 +2,8 @@
 
 
 ![Screenshot](/readme/screenshot_small.png)
+
+
 I was trying to upload Javascript generated/manipulated images to facebook and 1 day I was starting at someone’s profile picture photo which was a sub-image from the profile cover picture; later on, I tried writing some Javascript to do the same & that’s it
 +	Mouse Click for popup,
 Some browsers block popups if they weren’t triggered by some event; mouse click or smth
