@@ -3,7 +3,7 @@
     <title> SubCover </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://yogash1290.appspot.com/subcover/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,7 +17,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="http://yogash1290.appspot.com/subcover/js/bootstrap.min.js"></script>
 
 
 <table width="100%">
@@ -27,6 +27,7 @@
 <tr><td align="center">
 
 <div id="info">
+<div class="alert alert-danger">KEEP CALM & wait for your profile cover photo to load...</div>
 </div>
 
 </td></tr>
@@ -87,7 +88,7 @@
 				<canvas id="cover" width=100% height=100%></canvas>
 				<br>
 				<div id="div_cover">
-				<a href='javascript:submitPP();' class='btn btn-primary btn-lg' role='button'>Upload Profile Cover</a>
+				<a href='javascript:submitPP();' class='btn btn-info btn-lg' role='button'>Upload Profile Cover</a>
 				</div>
 			</div>
 		</div>
@@ -105,7 +106,7 @@
 				<canvas id="pp" width=100% height=100%></canvas>
 				<br>
 				<div id="div_pp">
-					<a href='javascript:submitPP();' class='btn btn-primary btn-lg' role='button'>Upload Profile Picture</a>
+					<a href='javascript:submitPP();' class='btn btn-success btn-lg' role='button'>Upload Profile Picture</a>
 				</div>
 			</div>
 		</div>
@@ -300,9 +301,7 @@ var access_token="";
 document.getElementById("info").innerHTML="Requesting your profile cover url...";
 
 if(access_token.length==0)
-{
    top.location.href=location.protocol+"//www.facebook.com/dialog/oauth?client_id=1383863391860833&redirect_uri=http://yogash1290.appspot.com/subcover/oauth/facebook/&scope=user_photos,publish_stream";
-}
 else
 {
 	var req=new XMLHttpRequest();
@@ -327,7 +326,7 @@ else
 			showSizeFactor();
 		};
 
-		document.getElementById("info").innerHTML="Loading your profile cover image...";
+		document.getElementById("info").innerHTML='<div class="alert alert-danger">KEEP CALM & wait for your profile cover photo to load...</div>';
 		img.src= "http://yogash1290.appspot.com/subcover/direct?url="+JSON.parse( this.response )["cover"]["source"];
 
 
