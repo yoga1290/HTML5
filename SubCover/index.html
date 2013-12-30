@@ -72,6 +72,22 @@
 				<br>
 
 				<canvas id="canvas" ></canvas>
+
+				<br>
+				<div class="row">
+					<div class="col-lg-6">
+					    <div class="input-group">
+					      <input type="text" class="form-control" placeholder="Or load Image from URL" id="imgURL">
+					      <span class="input-group-btn">
+					        <button class="btn btn-default" type="button" onclick="loadfromURL(document.getElementById('imgURL').value);">
+					        	<span class="glyphicon glyphicon-download-alt">
+					        	</span>
+					        </button>
+					      </span>
+					    </div><!-- /input-group -->
+					</div><!-- /.col-lg-6 -->
+				</div><!-- /.row -->
+				
 			</div>
 		</div>
 	</td>
@@ -130,6 +146,46 @@
 var lastX=-1,lastY=-1,press=0,dSize=0.5,sizefactor=1;
 var ox=0,oy=0,w=0,h=0;
 var canvas,context,img;
+
+function loadfromURL(url)
+{
+	canvas = document.getElementById("canvas");	
+		context = canvas.getContext("2d");
+		
+		img=new Image();
+		img.onload=function(){
+			canvas.width=w=img.width;
+			canvas.height=h=img.height;
+			context.drawImage(img, 0,0);
+			//subimg();
+			document.getElementById("div_pp").innerHTML=document.getElementById("div_pp").innerHTML="<a href='javascript:submitPP();' class='btn btn-success btn-lg' role='button'>Upload Profile Picture</a>";
+			document.getElementById("div_cover").innerHTML="<a href='javascript:submitCover();' class='btn btn-info btn-lg' role='button'>Upload Profile Cover</a>";
+			document.getElementById("info").innerHTML="";
+			showSizeFactor();
+
+			canvas.onmousedown=function(e){
+				lastX=-1;
+				press=1;
+			};
+			canvas.onmouseup=function(e){
+				press=0;
+				lastX=-1;
+			};
+			canvas.onmousemove=function(e){
+				if(!press) return;
+				if(lastX==-1){lastX=e.clientX;lastY=e.clientY;}
+				ox+=(e.clientX-lastX);
+				oy+=(e.clientY-lastY);
+				lastX=e.clientX;
+				lastY=e.clientY;
+
+				draw();
+			};
+
+		};
+	img.src=img.src= "http://yogash1290.appspot.com/subcover/direct?url="+url;
+}
+
 function subimg()
 {
 canvas.width=img.width;
@@ -314,47 +370,9 @@ else
 
 	req.onload= function(e)
 	{
-
-
-		canvas = document.getElementById("canvas");	
-		context = canvas.getContext("2d");
-		
-		img=new Image();
-		img.onload=function(){
-			canvas.width=w=img.width;
-			canvas.height=h=img.height;
-			context.drawImage(img, 0,0);
-			//subimg();
-			document.getElementById("div_pp").innerHTML=document.getElementById("div_pp").innerHTML="<a href='javascript:submitPP();' class='btn btn-success btn-lg' role='button'>Upload Profile Picture</a>";
-			document.getElementById("div_cover").innerHTML="<a href='javascript:submitCover();' class='btn btn-info btn-lg' role='button'>Upload Profile Cover</a>";
-			document.getElementById("info").innerHTML="";
-			showSizeFactor();
-		};
-
 		document.getElementById("info").innerHTML='<div class="alert alert-danger">KEEP CALM & wait for your profile cover photo to load...</div>';
-		img.src= "http://yogash1290.appspot.com/subcover/direct?url="+JSON.parse( this.response )["cover"]["source"];
-
-
-
-		canvas.onmousedown=function(e){
-			lastX=-1;
-			press=1;
-		};
-		canvas.onmouseup=function(e){
-			press=0;
-			lastX=-1;
-		};
-		canvas.onmousemove=function(e){
-			if(!press) return;
-			if(lastX==-1){lastX=e.clientX;lastY=e.clientY;}
-			ox+=(e.clientX-lastX);
-			oy+=(e.clientY-lastY);
-			lastX=e.clientX;
-			lastY=e.clientY;
-
-			draw();
-		};
-
+		// img.src= "http://yogash1290.appspot.com/subcover/direct?url="+JSON.parse( this.response )["cover"]["source"];
+		loadfromURL("http://yogash1290.appspot.com/subcover/direct?url="+JSON.parse( this.response )["cover"]["source"]);
 	};
    req.send();
 }
